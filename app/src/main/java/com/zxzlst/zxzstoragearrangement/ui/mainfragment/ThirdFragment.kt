@@ -12,6 +12,7 @@ import com.zxzlst.zxzstoragearrangement.R
 import com.zxzlst.zxzstoragearrangement.Repository
 import com.zxzlst.zxzstoragearrangement.insertmodule.CameraActivity
 import com.zxzlst.zxzstoragearrangement.logic.dao.createItem
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.third_fragment.*
 
 class ThirdFragment : Fragment() {
@@ -32,7 +33,7 @@ class ThirdFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(ThirdViewModel::class.java)
-        (requireActivity() as MainActivity).hideActionBar(false)
+        (requireActivity() as MainActivity).supportActionBar?.show()
 
 
         //该textView仅作为测试用

@@ -16,6 +16,7 @@ import com.zxzlst.zxzstoragearrangement.ZxzStorageApplication
 import com.zxzlst.zxzstoragearrangement.logic.dao.Item
 import com.zxzlst.zxzstoragearrangement.logic.dao.createItem
 import com.zxzlst.zxzstoragearrangement.ui.adapter.SecondAdapter
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.second_fragment.*
 
 class SecondFragment : Fragment() {
@@ -36,7 +37,7 @@ class SecondFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(SecondViewModel::class.java)
-        (requireActivity() as MainActivity).hideActionBar(false)
+        (requireActivity() as MainActivity).supportActionBar?.show()
         //recyclerview
         val layoutManager = GridLayoutManager(activity,3)
         secondFragment_recyclerView.layoutManager = layoutManager

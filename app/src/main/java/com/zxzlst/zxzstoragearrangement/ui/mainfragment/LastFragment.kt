@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.zxzlst.zxzstoragearrangement.MainActivity
 
 import com.zxzlst.zxzstoragearrangement.R
+import kotlinx.android.synthetic.main.activity_main.*
 
 class LastFragment : Fragment() {
 
@@ -28,7 +29,7 @@ class LastFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(LastViewModel::class.java)
-        (requireActivity() as MainActivity).hideActionBar(false)
+        (requireActivity() as MainActivity).supportActionBar?.show()
         // TODO: Use the ViewModel
     }
 

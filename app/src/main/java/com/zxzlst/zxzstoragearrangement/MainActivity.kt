@@ -24,8 +24,4 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun hideActionBar(bool : Boolean){
-        if (bool) supportActionBar?.hide()
-        else supportActionBar?.show()
-    }
 }

@@ -16,6 +16,7 @@ import com.zxzlst.zxzstoragearrangement.R
 import com.zxzlst.zxzstoragearrangement.Repository
 import com.zxzlst.zxzstoragearrangement.insertmodule.CameraActivity
 import com.zxzlst.zxzstoragearrangement.logic.dao.createItem
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.first_fragment.*
 
 class FirstFragment : Fragment() {
@@ -36,7 +37,7 @@ class FirstFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(FirstViewModel::class.java)
-        (requireActivity() as MainActivity).hideActionBar(true)
+        (requireActivity() as MainActivity).supportActionBar?.hide()
 
         //测试用
         justForTest_button.setOnClickListener {
