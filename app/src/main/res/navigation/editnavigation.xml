@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/editnavigation"
+    app:startDestination="@id/editSeeFragment">
+
+    <fragment
+        android:id="@+id/editSeeFragment"
+        android:name="com.zxzlst.zxzstoragearrangement.editmodule.ui.fragment.EditSeeFragment"
+        android:label="edit_see_fragment"
+        tools:layout="@layout/edit_see_fragment" >
+        <action
+            android:id="@+id/action_editSeeFragment_to_editChangeFragment"
+            app:destination="@id/editChangeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editChangeFragment"
+        android:name="com.zxzlst.zxzstoragearrangement.editmodule.ui.fragment.EditChangeFragment"
+        android:label="edit_change_fragment"
+        tools:layout="@layout/edit_change_fragment" >
+        <action
+            android:id="@+id/action_editChangeFragment_to_editSeeFragment"
+            app:destination="@id/editSeeFragment" />
+    </fragment>
+</navigation>

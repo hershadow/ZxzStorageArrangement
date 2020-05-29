@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".insertmodule.ui.fragment.CameraTakingFragment">
+
+    <TextureView
+        android:id="@+id/camera_textureView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/cameraGuidelineBottom"
+        app:layout_constraintEnd_toStartOf="@+id/cameraGuidelineRight"
+        app:layout_constraintStart_toStartOf="@+id/cameraGuidelineLeft"
+        app:layout_constraintTop_toTopOf="@+id/cameraGuidelineTop" />
+
+    <ImageButton
+        android:id="@+id/camera_capture_button"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_margin="24dp"
+        android:contentDescription="@string/defaultImageDescribe"
+        app:layout_constraintBottom_toBottomOf="@+id/camera_imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/camera_imageView"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
+
+    <ImageView
+        android:id="@+id/camera_imageView"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:clickable="true"
+        android:contentDescription="@string/defaultImageDescribe"
+        android:focusable="true"
+        android:src="@android:drawable/ic_menu_gallery"
+        app:layout_constraintBottom_toBottomOf="@+id/camera_info_textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.875"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/camera_info_textView" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/cameraGuidelineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/cameraGuidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.02" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/cameraGuidelineLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/cameraGuidelineRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="395dp" />
+
+    <TextView
+        android:id="@+id/camera_info_textView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/cardTextViewMarginStart"
+        android:layout_marginTop="@dimen/cardTextViewMarginTop"
+        android:layout_marginEnd="@dimen/cardTextViewMarginEnd"
+        android:layout_marginBottom="@dimen/cardTextViewMarginBottom"
+        android:gravity="center_vertical"
+        android:text="@string/defaultText"
+        android:textAlignment="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/camera_capture_button"
+        app:layout_constraintStart_toStartOf="@+id/cameraGuidelineLeft"
+        app:layout_constraintTop_toTopOf="@+id/cameraGuidelineBottom"
+        tools:text="sdasdasfdsafvxzv" />
+
+    <TextView
+        android:id="@+id/camera_number_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/defaultText"
+        app:layout_constraintBottom_toTopOf="@+id/camera_imageView"
+        app:layout_constraintEnd_toStartOf="@+id/cameraGuidelineRight"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/camera_imageView"
+        app:layout_constraintTop_toTopOf="@+id/cameraGuidelineBottom"
+        app:layout_constraintVertical_bias="1.0"
+        tools:text="1" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

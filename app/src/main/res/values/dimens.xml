@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cardTextViewMarginTop">10dp</dimen>
+    <dimen name="cardTextViewMarginBottom">10dp</dimen>
+    <dimen name="cardTextViewMarginStart">20dp</dimen>
+    <dimen name="cardTextViewMarginEnd">20dp</dimen>
+    <dimen name="mini_marginStart">5dp</dimen>
+    <dimen name="mini_marginEnd">5dp</dimen>
+    <dimen name="mini_marginTop">5dp</dimen>
+    <dimen name="mini_marginBottom">5dp</dimen>
+    <dimen name="textSizeSmall">16sp</dimen>
+    <dimen name="largeMargin">30dp</dimen>
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cameranavigation"
+    app:startDestination="@id/cameraTakingFragment">
+
+    <fragment
+        android:id="@+id/cameraTakingFragment"
+        android:name="com.zxzlst.zxzstoragearrangement.insertmodule.ui.fragment.CameraTakingFragment"
+        android:label="camera_taking_fragment"
+        tools:layout="@layout/camera_taking_fragment" >
+        <action
+            android:id="@+id/action_cameraTakingFragment_to_cameraInsertFragment"
+            app:destination="@id/cameraInsertFragment"
+            app:enterAnim="@anim/scale_from_album"
+            app:exitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/cameraInsertFragment"
+        android:name="com.zxzlst.zxzstoragearrangement.insertmodule.ui.fragment.CameraInsertFragment"
+        android:label="camera_insert_fragment"
+        tools:layout="@layout/camera_insert_fragment" >
+        <action
+            android:id="@+id/action_cameraInsertFragment_to_cameraTakingFragment"
+            app:destination="@id/cameraTakingFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@anim/scale_quit_album" />
+    </fragment>
+</navigation>

@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">ZxzStorageArrangement</string>
+    <string name="menu_zhuye">主页</string>
+    <string name="menu_liulan">浏览</string>
+    <string name="menu_sousuo">搜索</string>
+    <string name="menu_wode">我的</string>
+    <string name="default_itemName">未命名</string>
+    <string name="default_itemType">默认分类</string>
+    <string name="default_date">YY-MM-DD-hh-mm-ss</string>
+    <string name="editSee_editDate">添加日期</string>
+    <string name="editSee_startDate">生产日期</string>
+    <string name="editSee_endDate">过期日期</string>
+    <string name="editSee_number">个数</string>
+    <string name="editSee_tag">标签</string>
+    <string name="editSee_consumeType">消耗品类型</string>
+    <string name="editSee_noticeDate">提醒日期</string>
+    <string name="editSee_noticeContent">提醒内容</string>
+    <string name="editSee_customDescribe">自定描述</string>
+    <string name="editSee_brand">品牌</string>
+    <string name="defaultImageDescribe">默认图片框</string>
+    <string name="editSee_itemPrice">价格</string>
+    <string name="defaultText" />
+    <string name="ButtonBack">返回</string>
+    <string name="editSee_itemName">名称</string>
+    <string name="editSee_itemType">类别</string>
+    <string name="editSee_privacy">私密的</string>
+    <string name="editSee_shelfLife">保质期</string>
+    <string name="dateShow">%1$s年%2$s月%3$s日</string>
+    <string name="ShelfLife_Notice">请填写月份</string>
+    <string name="newRoom">新建空间</string>
+    <string name="newTag">新建标签</string>
+    <string name="defaultRoom">默认散落物件</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
