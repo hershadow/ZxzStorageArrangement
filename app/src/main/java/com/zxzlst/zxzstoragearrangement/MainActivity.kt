@@ -12,6 +12,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(main_toolBar)
 
         //底部导航
         val navController = Navigation.findNavController(this,R.id.fragmentHost_main)
@@ -20,5 +21,11 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(bottomNavigationView,navController)
         Repository.initImageFileArrangement()
 
+    }
+
+
+    fun hideActionBar(bool : Boolean){
+        if (bool) supportActionBar?.hide()
+        else supportActionBar?.show()
     }
 }

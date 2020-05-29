@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
+import com.zxzlst.zxzstoragearrangement.MainActivity
 
 import com.zxzlst.zxzstoragearrangement.R
 import com.zxzlst.zxzstoragearrangement.ZxzStorageApplication
@@ -35,6 +36,7 @@ class SecondFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(SecondViewModel::class.java)
+        (requireActivity() as MainActivity).hideActionBar(false)
         //recyclerview
         val layoutManager = GridLayoutManager(activity,3)
         secondFragment_recyclerView.layoutManager = layoutManager

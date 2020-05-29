@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.zxzlst.zxzstoragearrangement.MainActivity
 
 import com.zxzlst.zxzstoragearrangement.R
 
@@ -27,6 +28,7 @@ class LastFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(LastViewModel::class.java)
+        (requireActivity() as MainActivity).hideActionBar(false)
         // TODO: Use the ViewModel
     }
 

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.zxzlst.zxzstoragearrangement.MainActivity
 
 import com.zxzlst.zxzstoragearrangement.R
 import com.zxzlst.zxzstoragearrangement.Repository
@@ -31,6 +32,7 @@ class ThirdFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(ThirdViewModel::class.java)
+        (requireActivity() as MainActivity).hideActionBar(false)
 
 
         //该textView仅作为测试用

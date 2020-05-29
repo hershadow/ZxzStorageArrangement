@@ -9,6 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
+import androidx.appcompat.app.AppCompatActivity
+import com.zxzlst.zxzstoragearrangement.MainActivity
+
 import com.zxzlst.zxzstoragearrangement.R
 import com.zxzlst.zxzstoragearrangement.Repository
 import com.zxzlst.zxzstoragearrangement.insertmodule.CameraActivity
@@ -33,7 +36,7 @@ class FirstFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(FirstViewModel::class.java)
-
+        (requireActivity() as MainActivity).hideActionBar(true)
 
         //测试用
         justForTest_button.setOnClickListener {
