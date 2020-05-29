@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import com.zxzlst.zxzstoragearrangement.R
 import com.zxzlst.zxzstoragearrangement.Repository
 import com.zxzlst.zxzstoragearrangement.insertmodule.CameraActivity
+import com.zxzlst.zxzstoragearrangement.logic.dao.createItem
 import kotlinx.android.synthetic.main.first_fragment.*
 
 class FirstFragment : Fragment() {
@@ -34,12 +35,12 @@ class FirstFragment : Fragment() {
         viewModel = ViewModelProviders.of(this).get(FirstViewModel::class.java)
 
 
-        //该textView仅作为测试用
-        //justForTest_textView.text = String.format("%08d",Repository.getCalendarForFile())
-        justForTest_textView.text = ""
+        //测试用
         justForTest_button.setOnClickListener {
-            CameraActivity.activityStart(this.context!!,0)
-            //Repository.clearAllItem()
+            Repository.insertItem(createItem(largeBoxId = 1,categoryId = 1,itemName = "第一个大盒子ID1"),null)
+            Repository.insertItem(createItem(largeBoxId = 2,categoryId = 1,itemName = "第二个大盒子ID2"),null)
+            Repository.insertItem(createItem(largeBoxId = 1,mediumBoxId = 1,categoryId = 2,itemName = "第一个中盒子大ID1的中ID1"),null)
+            Repository.insertItem(createItem(largeBoxId = 2,mediumBoxId = 1,categoryId = 2,itemName = "第二个中盒子大ID2的中ID1"),null)
         }
 
 
