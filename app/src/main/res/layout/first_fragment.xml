@@ -12,15 +12,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/firstFragment_AppBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/cardTextViewMarginStart"
-            android:layout_marginTop="@dimen/cardTextViewMarginStart"
+            android:layout_marginTop="@dimen/cardTextViewMarginTop"
             android:layout_marginEnd="@dimen/cardTextViewMarginEnd"
-            android:background="@drawable/bottomdialog_cornner"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +30,11 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:visibility="visible"
+                app:layout_scrollFlags="scroll|enterAlways|snap">
 
                 <EditText
                     android:id="@+id/firstFragment_searchEditText"
@@ -61,7 +66,9 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/firstFragment_researchRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <Button
