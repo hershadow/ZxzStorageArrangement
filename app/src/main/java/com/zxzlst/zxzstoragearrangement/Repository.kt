@@ -53,6 +53,7 @@ object Repository {
         }
     }
     fun clearAllItem() = thread { itemDao.clearAllItem() }
+    fun searchForResult(pattern : String) : LiveData<List<Item>> = itemDao.searchForResult("%$pattern%")
 
     //回调接口，用于在获取到了item/itemList/itemid之后执行一些绘制等操作
     interface OnLoadItemIdListener {

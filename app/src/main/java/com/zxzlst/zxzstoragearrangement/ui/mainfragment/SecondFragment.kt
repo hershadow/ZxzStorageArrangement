@@ -41,16 +41,14 @@ class SecondFragment : Fragment() {
         //recyclerview
         val layoutManager = GridLayoutManager(activity,3)
         secondFragment_recyclerView.layoutManager = layoutManager
-        if(this.context == null) Toast.makeText(ZxzStorageApplication.context,"error-----SecondFragment - 39",Toast.LENGTH_SHORT).show()
-        else {
-            val adapter = SecondAdapter(this.context!!)
+        val adapter = SecondAdapter(requireContext())
             secondFragment_recyclerView.adapter = adapter
         viewModel.allItemLive.observe(viewLifecycleOwner, Observer {
             //数据库变更后运行此处更新recyclerview
             adapter.setItemList(it)
             adapter.notifyDataSetChanged()
         })
-        }
+
 
         //测试用
         secondFragment_button.setOnClickListener {

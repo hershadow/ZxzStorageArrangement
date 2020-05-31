@@ -10,12 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.zxzlst.zxzstoragearrangement.MainActivity
 
 import com.zxzlst.zxzstoragearrangement.R
 import com.zxzlst.zxzstoragearrangement.Repository
 import com.zxzlst.zxzstoragearrangement.insertmodule.CameraActivity
 import com.zxzlst.zxzstoragearrangement.logic.dao.createItem
+import com.zxzlst.zxzstoragearrangement.ui.adapter.FirstAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.first_fragment.*
 
@@ -26,6 +30,7 @@ class FirstFragment : Fragment() {
     }
 
     private lateinit var viewModel: FirstViewModel
+    private lateinit var adapter : FirstAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +43,33 @@ class FirstFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(FirstViewModel::class.java)
         (requireActivity() as MainActivity).supportActionBar?.hide()
+
+        //recyclerView
+        val layoutManager = LinearLayoutManager(requireActivity())
+        firstFragment_researchRecyclerView.layoutManager = layoutManager
+        adapter = FirstAdapter(this,viewModel.resultList)
+        firstFragment_researchRecyclerView.adapter = adapter
+        firstFragment_searchEditText.addTextChangedListener{
+            if (it != null){
+                val content = it.toString()
+                viewModel.searchForResult(content)
+            }else{
+                firstFragment_researchRecyclerView.visibility = View.GONE
+                viewModel.resultList.clear()
+                adapter.notifyDataSetChanged()
+            }
+        }
+        viewModel.resultLiveData.observe(viewLifecycleOwner, Observer {
+            if (it != null){
+                firstFragment_researchRecyclerView.visibility = View.VISIBLE
+                viewModel.resultList.clear()
+                viewModel.resultList.addAll(it)
+                adapter.notifyDataSetChanged()
+            }
+        })
+
+
+
 
         //测试用
         justForTest_button.setOnClickListener {
