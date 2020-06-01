@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.zxzlst.zxzstoragearrangement.R
 import com.zxzlst.zxzstoragearrangement.Repository
 import com.zxzlst.zxzstoragearrangement.editmodule.EditActivityForMain
@@ -41,8 +42,9 @@ class SecondAdapter(val context: Context) : RecyclerView.Adapter<SecondAdapter.V
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         //图片放这里太卡顿，setbitmap每次都会创建新的，导致内存占用高
         val photoPath = Repository.mainPhotoPathToMipMap(itemList[position].mainPhotoPath)
-        holder.secondItemImage.setImageBitmap(BitmapFactory.decodeFile(photoPath))
-        //holder.secondItemImage.setImageDrawable(setUpImage(itemList[position].mainPhotoPath))
+
+        Glide.with(holder.itemView).load(photoPath).placeholder(R.drawable.ic_image_black_24dp).into(holder.itemView.secondItem_imageView)
+        //holder.secondItemImage.setImageBitmap(BitmapFactory.decodeFile(photoPath))
 
 
         holder.secondItemText.text = itemList[position].itemName
