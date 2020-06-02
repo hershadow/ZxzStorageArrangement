@@ -25,13 +25,8 @@ class EditSeeFragment : Fragment() {
     }
 
     private lateinit var viewModel: EditSeeViewModel
+    private val itemId :Long by lazy { (requireActivity() as EditActivityForMain).recentItemId }
 
-    //获得当前的ItemId
-    private var itemId :Long = 0
-    override fun onAttach(activity: Activity) {
-        super.onAttach(activity)
-        itemId = (activity as EditActivityForMain).recentItemId
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

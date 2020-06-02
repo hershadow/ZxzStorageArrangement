@@ -19,12 +19,7 @@ class EditChangeFragment : Fragment() {
 
     private lateinit var viewModel: EditChangeViewModel
 
-    //同see,获取选择的item
-    private var itemId :Long = 0
-    override fun onAttach(activity: Activity) {
-        super.onAttach(activity)
-        itemId = (activity as EditActivityForMain).recentItemId
-    }
+    private val itemId :Long by lazy { (requireActivity() as EditActivityForMain).recentItemId }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +31,11 @@ class EditChangeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(EditChangeViewModel::class.java)
+
+
+
+
+
         // TODO: Use the ViewModel
     }
 
