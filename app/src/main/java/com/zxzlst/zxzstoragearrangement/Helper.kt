@@ -68,5 +68,21 @@ fun caculateStartEndShelfLifeDate(startDate : String?,endDate : String?,shelfLif
     return 0
 }
 
+//将Item的类名转换为界面上显示的中文字           不含标签的，标签的搜索栏是另一个，本搜索栏不搜标签信息
+fun transFromFieldText(itemFields : String): String{
+    return when(itemFields){
+        "brand" -> ZxzStorageApplication.context.resources.getString(R.string.editSee_brand)
+        "itemPrice" -> ZxzStorageApplication.context.resources.getString(R.string.editSee_itemPrice)
+        "itemNumber" -> ZxzStorageApplication.context.resources.getString(R.string.editSee_number)
+        "itemName" -> ZxzStorageApplication.context.resources.getString(R.string.editSee_itemName)
+        "itemType" -> ZxzStorageApplication.context.resources.getString(R.string.editSee_itemType)
+        "editDate" -> ZxzStorageApplication.context.resources.getString(R.string.editSee_editDate)
+        "startDate" -> ZxzStorageApplication.context.resources.getString(R.string.editSee_startDate)
+        "noticeContent" -> ZxzStorageApplication.context.resources.getString(R.string.editSee_noticeContent)
+        "noticeDate" -> ZxzStorageApplication.context.resources.getString(R.string.editSee_noticeDate)
+        "customDescribe" -> ZxzStorageApplication.context.resources.getString(R.string.editSee_customDescribe)
+        else -> ""
+    }
+}
 
 
