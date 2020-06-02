@@ -55,7 +55,7 @@ class FirstAdapter(private val fragment: Fragment,private val researchList : Lis
         try {
             var tag = 0
             loop@ for (info in researchList[position].javaClass.declaredFields){
-                if (info.name == "brand" || info.name == "itemName" || info.name == "itemType" || info.name == "itemNumber" || info.name == "itemPrice" || info.name == "noticeContent" || info.name == "noticeDate"){
+                if (info.name == "brand" || info.name == "itemName" || info.name == "itemType" || info.name == "itemNumber" || info.name == "itemPrice" || info.name == "noticeContent" || info.name == "noticeDate" || info.name == "customDescribe"){
                     val access = info.isAccessible
                     info.isAccessible = true
                     if (info.get(researchList[position]).toString().contains(fragment.firstFragment_searchEditText.text.toString())){
