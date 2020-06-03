@@ -20,9 +20,11 @@ import com.google.android.material.chip.Chip
 
 import com.zxzlst.zxzstoragearrangement.R
 import com.zxzlst.zxzstoragearrangement.Repository
+import com.zxzlst.zxzstoragearrangement.ZxzStorageApplication
 import com.zxzlst.zxzstoragearrangement.insertmodule.ui.adapter.PagerPhotoListAdapter
 import com.zxzlst.zxzstoragearrangement.insertmodule.ui.adapter.PagerPhotoViewHolder
 import com.zxzlst.zxzstoragearrangement.logic.dao.Item
+import com.zxzlst.zxzstoragearrangement.logic.dao.createItem
 import kotlinx.android.synthetic.main.activity_edit_for_main.*
 import kotlinx.android.synthetic.main.camera_bottomsheetdialog.*
 import kotlinx.android.synthetic.main.camera_bottomsheetdialog.view.*
@@ -235,6 +237,12 @@ class BottomDialogSheetFragment : BottomSheetDialogFragment() {
 
         //添加chip的listener
         bottomDialog_add_firstChip.setOnClickListener {
+            var roomId = -1
+            viewModel.getLeisureRoom(1,0,0,object : Repository.OnLoadRoomListener{
+                override fun doAfterGetRoom(returnRoom: Int) {
+                    roomId = returnRoom
+                }
+            })
             val editText = EditText(requireContext())
             val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
                 .setTitle("输入空间名称").setView(editText).setPositiveButton(
@@ -246,15 +254,15 @@ class BottomDialogSheetFragment : BottomSheetDialogFragment() {
                             false
                         ) as Chip
                         newChip.text = editText.text.toString()
-                    val boxId = viewModel.createLargeRoom(editText.text.toString())
-                    //这个地方有点小瑕疵，上面是耗时操作，下面按钮进行读取的话手点的快可能还没创建就在读了，不过不影响，反正新创建的BOX读出来总是空的
-                    newChip.setOnCheckedChangeListener { buttonView, isChecked ->
-                        if (isChecked) readyForSecondRoom(boxId)
-                    }
+                    if (roomId != -1){
+                        viewModel.insertItem(createItem(largeBoxId = roomId,mediumBoxId = 0,smallBoxId = 0,itemName = editText.text.toString(),categoryId = 1),null)
+                        newChip.setOnCheckedChangeListener { buttonView, isChecked ->
+                            if (isChecked) readyForSecondRoom(roomId)
+                        }
                         //给chip加一个tag来拿到该空间的ID
-                        newChip.setTag(R.id.tag_chip,boxId)
+                        newChip.setTag(R.id.tag_chip,roomId)
                         bottomDialog_firstChipGroup.addView(newChip)
-
+                    }
                 }.setNegativeButton(
                     "取消"
                 ) { dialog, which ->
@@ -263,6 +271,12 @@ class BottomDialogSheetFragment : BottomSheetDialogFragment() {
             builder.create().show()
         }
         bottomDialog_add_secondChip.setOnClickListener {
+            var roomId = -1
+            viewModel.getLeisureRoom(2,currentChoose[0],0,object : Repository.OnLoadRoomListener{
+                override fun doAfterGetRoom(returnRoom: Int) {
+                    roomId = returnRoom
+                }
+            })
             val editText = EditText(requireContext())
             val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
                 .setTitle("输入空间名称").setView(editText).setPositiveButton(
@@ -274,14 +288,23 @@ class BottomDialogSheetFragment : BottomSheetDialogFragment() {
                             false
                         ) as Chip
                         newChip.text = editText.text.toString()
-                    val boxId = viewModel.createLargeRoom(editText.text.toString())
-                    newChip.setOnCheckedChangeListener { buttonView, isChecked ->
-                        if (isChecked) readyForThirdRoom(boxId)
-                    }
+                    if (roomId != -1) {
+                        viewModel.insertItem(
+                            createItem(
+                                largeBoxId = currentChoose[0],
+                                mediumBoxId = roomId,
+                                smallBoxId = 0,
+                                itemName = editText.text.toString(),
+                                categoryId = 2
+                            ), null
+                        )
+                        newChip.setOnCheckedChangeListener { buttonView, isChecked ->
+                            if (isChecked) readyForThirdRoom(roomId)
+                        }
                         //给chip加一个tag来拿到该空间的ID
-                        newChip.setTag(R.id.tag_chip, boxId)
+                        newChip.setTag(R.id.tag_chip, roomId)
                         bottomDialog_secondChipGroup.addView(newChip)
-
+                    }
                 }.setNegativeButton(
                     "取消"
                 ) { dialog, which ->
@@ -290,6 +313,12 @@ class BottomDialogSheetFragment : BottomSheetDialogFragment() {
             builder.create().show()
         }
         bottomDialog_add_thirdChip.setOnClickListener {
+            var roomId = -1
+            viewModel.getLeisureRoom(3,currentChoose[0],currentChoose[1],object : Repository.OnLoadRoomListener{
+                override fun doAfterGetRoom(returnRoom: Int) {
+                    roomId = returnRoom
+                }
+            })
             val editText = EditText(requireContext())
             val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
                 .setTitle("输入空间名称").setView(editText).setPositiveButton(
@@ -301,10 +330,20 @@ class BottomDialogSheetFragment : BottomSheetDialogFragment() {
                         false
                     ) as Chip
                     newChip.text = editText.text.toString()
-                    //给chip加一个tag来拿到该空间的ID
-                    newChip.setTag(R.id.tag_chip, viewModel.createLargeRoom(editText.text.toString()))
-                    bottomDialog_thirdChipGroup.addView(newChip)
-
+                    if (roomId != -1) {
+                        viewModel.insertItem(
+                            createItem(
+                                largeBoxId = currentChoose[0],
+                                mediumBoxId = currentChoose[1],
+                                smallBoxId = roomId,
+                                itemName = editText.text.toString(),
+                                categoryId = 3
+                            ), null
+                        )
+                        //给chip加一个tag来拿到该空间的ID
+                        newChip.setTag(R.id.tag_chip, roomId)
+                        bottomDialog_thirdChipGroup.addView(newChip)
+                    }
                 }.setNegativeButton(
                     "取消"
                 ) { dialog, which ->

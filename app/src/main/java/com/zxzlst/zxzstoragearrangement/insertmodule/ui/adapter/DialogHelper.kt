@@ -38,7 +38,7 @@ fun dialogSolver(holder: PagerPhotoViewHolder,fragmentForUse : Fragment,adapter:
          */
     }
 }
-
+/*
 //创建dialog
 private fun createBottomDialog(holder : PagerPhotoViewHolder,item : Item,fragmentForUse: Fragment) : Item {
     val returnItem : Item = item
@@ -78,4 +78,8 @@ private fun dialogAddClickEvent(view: View, holder: PagerPhotoViewHolder,fragmen
 
 
     return view
+
+
 }
+ */
+

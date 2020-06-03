@@ -24,6 +24,10 @@ interface ItemDao {
     @Query("delete from Item")
     fun clearAllItem()
 
+    //获取所有空间
+    @Query("SELECT * FROM Item Where categoryId != 0")
+    fun loadAllRoom() : List<Item>
+
     //获取Large ROOM空间
     @Query("select * from Item Where categoryId = 1")
     fun loadAllLargeBoxType() : List<Item>

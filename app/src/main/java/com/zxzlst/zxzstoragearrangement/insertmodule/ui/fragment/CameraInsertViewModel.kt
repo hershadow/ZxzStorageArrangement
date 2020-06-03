@@ -73,7 +73,7 @@ class CameraInsertViewModel : ViewModel() {
 
 
     //Repository工具库
-    fun createLargeRoom(string: String) = Repository.createLargeRoom(string)
+    fun getLeisureRoom(type: Int,large : Int,medium : Int,listener: Repository.OnLoadRoomListener) = Repository.getLeisureRoom(type,large,medium,listener)
     fun loadLargeBoxId(onLoadItemListListener: Repository.OnLoadItemListListener) = Repository.loadLargeBoxId(onLoadItemListListener)
     fun loadMediumBoxId(largeBoxId : Int ,onLoadItemListListener: Repository.OnLoadItemListListener) = Repository.loadMediumBoxId(largeBoxId,onLoadItemListListener)
     fun loadSmallBoxId(largeBoxId : Int ,mediumBoxId : Int,onLoadItemListListener: Repository.OnLoadItemListListener) = Repository.loadSmallBoxId(largeBoxId,mediumBoxId,onLoadItemListListener)

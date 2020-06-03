@@ -65,6 +65,9 @@ object Repository {
     interface OnLoadItemListListener {
         fun doAfterGetItemList(returnItemList : List<Item>) = run { }
     }
+    interface OnLoadRoomListener {
+        fun doAfterGetRoom(returnRoom : Int) = run { }
+    }
 
     //拿取大中小BOX的ID
     fun loadLargeBoxId(onLoadItemListListener: OnLoadItemListListener) {
@@ -87,10 +90,55 @@ object Repository {
 
 
 
-        // 创建主层空间
-        fun createLargeRoom(string : String) : Int{
+        // 创建空间 ,type == 1: 主类 ，2：中，3，小      largeId:主类id ，medium同理，创建主类这俩可以随便填，中类类推
+        fun getLeisureRoom(type : Int,mainId : Int,mediumID : Int,onLoadRoomListener: OnLoadRoomListener){
+            var temporaryRoom : List<Item> = listOf()
+            when(type){
+                1 -> {
+                    thread {
+                        temporaryRoom = itemDao.loadAllRoom()
+                        aaa@for (position in 1..100000){
+                             for (room in temporaryRoom){
+                                 if (room.categoryId == 1){
+                                     if (room.largeBoxId == position) continue@aaa
+                                 }
+                            }
+                            onLoadRoomListener.doAfterGetRoom(position)
+                            break@aaa
+                        }
+                    }
+                }
+                2 -> {
+                    thread {
+                        temporaryRoom = itemDao.loadAllRoom()
+                        bbb@for (position in 1..100000){
+                            for (room in temporaryRoom){
+                                if (room.categoryId == 2 && room.largeBoxId == mainId){
+                                    if (room.largeBoxId == position) continue@bbb
+                                }
+                            }
+                            onLoadRoomListener.doAfterGetRoom(position)
+                            break@bbb
+                        }
+                    }
+                }
+                3 -> {
+                    thread {
+                        temporaryRoom = itemDao.loadAllRoom()
+                        ccc@for (position in 1..100000){
+                            for (room in temporaryRoom){
+                                if (room.categoryId == 3 && room.largeBoxId == mainId && room.mediumBoxId == mediumID){
+                                    if (room.largeBoxId == position) continue@ccc
+                                }
+                            }
+                            onLoadRoomListener.doAfterGetRoom(position)
+                            break@ccc
+                        }
+                    }
+                }
+                else -> {}
+            }
             //TODO         这里要做的是  查找数据库的主空间序号，创建一个与已存在的空间序号不同的新空间，返回该空间序号
-            return 0
         }
 
 
