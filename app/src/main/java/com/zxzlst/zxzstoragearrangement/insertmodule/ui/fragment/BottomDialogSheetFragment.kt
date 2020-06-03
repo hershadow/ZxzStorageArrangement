@@ -40,7 +40,7 @@ import java.util.*
 class BottomDialogSheetFragment : BottomSheetDialogFragment() {
     lateinit var behavior: BottomSheetBehavior<FrameLayout>
     val viewModel: CameraInsertViewModel by lazy { ViewModelProviders.of(fragmentForUse).get(CameraInsertViewModel::class.java) }
-    var currentChoose : MutableList<Int> = mutableListOf(0,0,0)
+    private var currentChoose : MutableList<Int> = mutableListOf(0,0,0)
     lateinit var holder: PagerPhotoViewHolder
     lateinit var fragmentForUse : Fragment
     lateinit var adapter: PagerPhotoListAdapter
