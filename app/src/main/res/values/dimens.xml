@@ -10,4 +10,5 @@
     <dimen name="mini_marginBottom">5dp</dimen>
     <dimen name="textSizeSmall">16sp</dimen>
     <dimen name="largeMargin">30dp</dimen>
+    <dimen name="superLargeMargin">200dp</dimen>
 </resources>

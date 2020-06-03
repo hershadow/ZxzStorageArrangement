@@ -17,6 +17,7 @@ import com.google.gson.reflect.TypeToken
 
 import com.zxzlst.zxzstoragearrangement.R
 import com.zxzlst.zxzstoragearrangement.Repository
+import com.zxzlst.zxzstoragearrangement.getTemporaryFiles
 import com.zxzlst.zxzstoragearrangement.insertmodule.ui.adapter.PagerPhotoListAdapter
 import com.zxzlst.zxzstoragearrangement.logic.model.ResultInfo
 import kotlinx.android.synthetic.main.camera_insert_fragment.*
@@ -73,18 +74,7 @@ class CameraInsertFragment : Fragment() {
 
 
         //pagerView滚动屏幕设置     文件夹先按最后修改日期排好序
-        if (Repository.repositoryImagePathTemporary.listFiles() != null){
-            val temporaryFiles = Repository.repositoryImagePathTemporary.listFiles()!!
-            Arrays.sort(temporaryFiles) { o1, o2 ->
-                val diff : Long = (o1.lastModified()) - (o2.lastModified())
-                when{
-                    diff> 0 -> 1
-                    diff == 0L -> 0
-                    diff < 0 -> -1
-                    else -> 0
-                }
-            }
-            viewModel.initViewModelData(temporaryFiles)
+            viewModel.initViewModelData(getTemporaryFiles())
 
 
             //获得相机拍摄后的识图结果，从这里传进来能减少一部分调用时间 （也能减少一些流量开销）
@@ -108,7 +98,7 @@ class CameraInsertFragment : Fragment() {
             val pagerPhotoListAdapter = PagerPhotoListAdapter(this)
             pagerPhotoListAdapter.apply {
                 viewPager2.adapter = this
-                submitList(temporaryFiles.toList())
+                submitList(getTemporaryFiles().toList())
             }
 
             //刷新按钮设置事件，该操作网络传输要耗时
@@ -117,17 +107,16 @@ class CameraInsertFragment : Fragment() {
                     Toast.makeText(requireContext(),"未获取到token无法查询",Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
-                //TODO   此处要发送请求。待写         在OBSERVER中receiveInfoList（true）来通知刷新结果
+                //TODO   此处要发送请求。待写         在OBSERVER中receiveInfoList（1）来通知刷新结果
+
+
+
             }
 
             //设置识图结果LIST发生改变后，调用adapter的方法
             viewModel.photoResearchList.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 pagerPhotoListAdapter.refreshInfoList(1)
             })
-
-        }else{
-            Toast.makeText(this.context,"error:未找到拍摄文件",Toast.LENGTH_SHORT).show()
-        }
 
 
 

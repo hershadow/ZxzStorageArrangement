@@ -23,14 +23,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.chip.Chip
-import com.zxzlst.zxzstoragearrangement.R
-import com.zxzlst.zxzstoragearrangement.Repository
-import com.zxzlst.zxzstoragearrangement.ZxzStorageApplication
+import com.zxzlst.zxzstoragearrangement.*
 import com.zxzlst.zxzstoragearrangement.insertmodule.ui.fragment.CameraInsertViewModel
 import com.zxzlst.zxzstoragearrangement.logic.dao.Item
 import com.zxzlst.zxzstoragearrangement.logic.dao.createItem
 import com.zxzlst.zxzstoragearrangement.logic.model.ResultInfo
-import com.zxzlst.zxzstoragearrangement.zxzOptionSharedPreferences
 import kotlinx.android.synthetic.main.camera_bottomsheetdialog.*
 import kotlinx.android.synthetic.main.camera_bottomsheetdialog.view.*
 import kotlinx.android.synthetic.main.camera_insert_pager_info.view.*
@@ -45,21 +42,11 @@ class PagerPhotoListAdapter(fragment: Fragment) : ListAdapter<File,PagerPhotoVie
     private  val viewModel: CameraInsertViewModel by lazy { ViewModelProviders.of(fragment).get(CameraInsertViewModel::class.java) }
     private val fragmentForUse = fragment
     private var currentPosition: Int = 0
+    private var currentPositionList  = mutableListOf<Int>()
     //这个holder暂定给刷新InfoList用的
     private var currentHolder : PagerPhotoViewHolder? = null
     private lateinit var photoInfoList : MutableList<MutableList<ResultInfo>>
 
-    private val temporaryFiles by lazy { Repository.repositoryImagePathTemporary.listFiles()!!.apply {
-        Arrays.sort(this) { o1, o2 ->
-            val diff : Long = (o1.lastModified()) - (o2.lastModified())
-            when{
-                diff> 0 -> 1
-                diff == 0L -> 0
-                diff < 0 -> -1
-                else -> 0
-            }
-        }
-    } }
 /*
     private val temporaryFiles : Array<File>? = Repository.repositoryImagePathTemporary.listFiles()
 
@@ -99,19 +86,19 @@ class PagerPhotoListAdapter(fragment: Fragment) : ListAdapter<File,PagerPhotoVie
         //TODO 这俩得分清楚，current需要通过和detach一起进行判断获得
 
         //将当前屏幕展示的VIEW的position保存下来供其他函数使用  holder给refresh用
-        currentPosition = holder.adapterPosition
-        currentHolder = holder
+        currentPositionList.add(holder.adapterPosition)
+        if (currentHolder == null) currentHolder = holder
 
 
         //刷新获取photoInfoList
         if (viewModel.photoResearchList.value != null) photoInfoList = viewModel.photoResearchList.value!!
 
         //根据photoInfoList调整按钮的显示
-        if (photoInfoList[currentPosition][0].score > 0.1){
-            addButtonEventForInfo(holder,photoInfoList[currentPosition])
+        if (photoInfoList[holder.adapterPosition][0].score > 0.1){
+            addButtonEventForInfo(holder,photoInfoList[holder.adapterPosition])
         }
         if (viewModel.showInfoButtonList.value!= null){
-            if (viewModel.showInfoButtonList.value!![currentPosition]) {
+            if (viewModel.showInfoButtonList.value!![holder.adapterPosition]) {
                 holder.itemView.camera_cardView_nameInfo.visibility = View.VISIBLE
                 holder.itemView.camera_cardView_TypeInfo.visibility = View.VISIBLE
             }else{
@@ -125,7 +112,7 @@ class PagerPhotoListAdapter(fragment: Fragment) : ListAdapter<File,PagerPhotoVie
 
 
         if (viewModel.finishOrNotList.value!= null){
-            if (viewModel.finishOrNotList.value!![currentPosition]){
+            if (viewModel.finishOrNotList.value!![holder.adapterPosition]){
                 holder.itemView.camera_insert_scrollView2.visibility = View.GONE
                 holder.itemView.camera_insert_scrollView.visibility = View.GONE
                 holder.itemView.camera_insert_pager_saveButton.isClickable = false
@@ -141,10 +128,10 @@ class PagerPhotoListAdapter(fragment: Fragment) : ListAdapter<File,PagerPhotoVie
             holder.itemView.camera_insert_pagerr_deleteButton.setOnClickListener {
                 try {
                     //TODO 在这里来个dialog ，选择确定的话再删除
-                    viewModel.finishOrNotList.value!![currentPosition] = true
+                    viewModel.finishOrNotList.value!![holder.adapterPosition] = true
                     refreshInfoList(2)
                     //不要在这里删除，会打乱队列，在退出时删除,这里打上标记
-                    viewModel.deleteList.add(temporaryFiles[currentPosition])
+                    viewModel.deleteList.add(getTemporaryFiles()[holder.adapterPosition])
                     Toast.makeText(fragmentForUse.requireContext(), "已添加标记，将于返回拍照界面时进行删除",Toast.LENGTH_LONG).show()
                 }catch (e:Exception){
                     Toast.makeText(fragmentForUse.requireContext(), "删除失败:$e",Toast.LENGTH_LONG).show()
@@ -165,7 +152,7 @@ class PagerPhotoListAdapter(fragment: Fragment) : ListAdapter<File,PagerPhotoVie
         /*if (viewModel.getViewModelItem(position) == null) return
         val itemInViewModel : Item = viewModel.getViewModelItem(position)!!
          */
-        holder.itemView.camera_insert_pager_imageView.setImageBitmap(BitmapFactory.decodeFile(Repository.repositoryImagePathTemporaryMipmap.path + "/" + temporaryFiles[position].name))
+        holder.itemView.camera_insert_pager_imageView.setImageBitmap(BitmapFactory.decodeFile(Repository.repositoryImagePathTemporaryMipmap.path + "/" + getTemporaryFiles()[position].name))
 
         //chip的check事件，check的时候传给viewModel
         initChipCheckListener(holder.itemView,holder.adapterPosition)
@@ -248,7 +235,7 @@ class PagerPhotoListAdapter(fragment: Fragment) : ListAdapter<File,PagerPhotoVie
                         currentHolder!!.itemView.camera_insert_scrollView2.visibility = View.GONE
                         currentHolder!!.itemView.camera_insert_scrollView.visibility = View.GONE
                         currentHolder!!.itemView.camera_insert_pager_saveButton.isClickable = false
-                        Toast.makeText(fragmentForUse.requireContext(),"删除/添加 功能完成，对象已从相册移除",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(fragmentForUse.requireContext(),"删除/添加 功能完成",Toast.LENGTH_SHORT).show()
                     }else{
                         currentHolder!!.itemView.camera_insert_scrollView2.visibility = View.VISIBLE
                         currentHolder!!.itemView.camera_insert_scrollView.visibility = View.VISIBLE
@@ -456,7 +443,9 @@ class PagerPhotoListAdapter(fragment: Fragment) : ListAdapter<File,PagerPhotoVie
     }
 
     override fun onViewDetachedFromWindow(holder: PagerPhotoViewHolder) {
-        Log.d("zxzzxzzxz",holder.adapterPosition.toString() + "detach")
+        currentPositionList.remove(holder.adapterPosition)
+        if (currentPositionList.size == 1) currentPosition = currentPositionList[0]
+        Log.d("zxzzxzzxz", "detach" + currentPositionList.toString())
         holder.itemView.apply {
             camera_card_itemName_editText.removeTextChangedListener (mWatcherName)
             camera_card_itemType_editText.removeTextChangedListener (mWatcherType)

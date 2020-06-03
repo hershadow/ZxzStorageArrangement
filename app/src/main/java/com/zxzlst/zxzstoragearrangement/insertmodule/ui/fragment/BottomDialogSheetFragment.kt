@@ -21,6 +21,7 @@ import com.google.android.material.chip.Chip
 import com.zxzlst.zxzstoragearrangement.R
 import com.zxzlst.zxzstoragearrangement.Repository
 import com.zxzlst.zxzstoragearrangement.ZxzStorageApplication
+import com.zxzlst.zxzstoragearrangement.getTemporaryFiles
 import com.zxzlst.zxzstoragearrangement.insertmodule.ui.adapter.PagerPhotoListAdapter
 import com.zxzlst.zxzstoragearrangement.insertmodule.ui.adapter.PagerPhotoViewHolder
 import com.zxzlst.zxzstoragearrangement.logic.dao.Item
@@ -94,26 +95,14 @@ class BottomDialogSheetFragment : BottomSheetDialogFragment() {
                                 try {
                                     if (returnItemId != (-1).toLong()){
                                         getItemId = returnItemId
-                                        if (Repository.repositoryImagePathTemporary.listFiles() != null){
-                                            val temporaryFiles = Repository.repositoryImagePathTemporary.listFiles()!!
-                                            Arrays.sort(temporaryFiles) { o1, o2 ->
-                                                val diff : Long = (o1.lastModified()) - (o2.lastModified())
-                                                when{
-                                                    diff> 0 -> 1
-                                                    diff == 0L -> 0
-                                                    diff < 0 -> -1
-                                                    else -> 0
-                                                }
-                                            }
-                                            Repository.temporaryToNormal(temporaryFiles[holder.adapterPosition],getItemId)
-
+                                            Repository.temporaryToNormal(getTemporaryFiles()[holder.adapterPosition],getItemId)
+                                        viewModel.deleteList.add(getTemporaryFiles()[holder.adapterPosition])
                                         viewModel.insertItemList.value?.get(holder.adapterPosition)!!.id = getItemId
                                         viewModel.insertItemList.value?.get(holder.adapterPosition)!!.mainPhotoPath = Repository.repositoryImagePathNormalMain.path + "/zxz${getItemId}.jpg"
                                         viewModel.updateItem(viewModel.insertItemList.value?.get(holder.adapterPosition)!!)
                                         viewModel.finishOrNotList.value?.set(holder.adapterPosition,true)
                                         requireActivity().runOnUiThread{
                                             adapter.refreshInfoList(2)
-                                        }
                                         }
                                     }else dialog_confirm_imageButton.post {
                                         Toast.makeText(

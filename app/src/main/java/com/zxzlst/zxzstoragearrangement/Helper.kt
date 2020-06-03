@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import com.zxzlst.zxzstoragearrangement.insertmodule.ui.fragment.CameraInsertViewModel
+import java.io.File
 import java.lang.Exception
 import java.util.*
 
@@ -83,6 +84,20 @@ fun transFromFieldText(itemFields : String): String{
         "customDescribe" -> ZxzStorageApplication.context.resources.getString(R.string.editSee_customDescribe)
         else -> ""
     }
+}
+
+fun getTemporaryFiles() : Array<File>{
+    val temporaryFiles = Repository.repositoryImagePathTemporary.listFiles()!!
+    Arrays.sort(temporaryFiles) { o1, o2 ->
+        val diff : Long = (o1.lastModified()) - (o2.lastModified())
+        when{
+            diff> 0 -> 1
+            diff == 0L -> 0
+            diff < 0 -> -1
+            else -> 0
+        }
+    }
+    return temporaryFiles
 }
 
 

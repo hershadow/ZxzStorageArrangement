@@ -208,7 +208,7 @@ object Repository {
             val newBitmap = Bitmap.createBitmap(mBitmap, 0, 0, mBitmap.width, mBitmap.height, matrix, true)
             newBitmap.compress(Bitmap.CompressFormat.JPEG, 70, fileOut)
             fileOut.use { it.flush() }
-            imageFile.renameTo(File(repositoryImagePathNormalMain.path + "/zxz${itemId}.jpg"))
+            imageFile.copyTo(File(repositoryImagePathNormalMain.path + "/zxz${itemId}.jpg"))
         }
 
     // 把item的mainPhotoPath传进来，得到mipmap的地址
