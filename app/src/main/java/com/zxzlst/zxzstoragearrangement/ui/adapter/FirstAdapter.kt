@@ -28,7 +28,6 @@ import java.lang.reflect.Field
 class FirstAdapter(private val fragment: Fragment,private val researchList : List<Item>) : RecyclerView.Adapter<FirstAdapter.ViewHolder>(){
 
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view){
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,17 +39,12 @@ class FirstAdapter(private val fragment: Fragment,private val researchList : Lis
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         //图片放这里太卡顿，setbitmap每次都会创建新的，导致内存占用高
-
-            val photoPath = Repository.mainPhotoPathToMipMap(researchList[position].mainPhotoPath)
-
-            Glide.with(holder.itemView).load(photoPath).placeholder(R.drawable.ic_image_black_24dp).into(holder.itemView.firstItem_imageView)
-
-
-            holder.itemView.firstItem_TextView_L1.text = researchList[position].itemName
-            holder.itemView.firstItem_TextView_R1.text = researchList[position].itemType
+        val photoPath = Repository.mainPhotoPathToMipMap(researchList[position].mainPhotoPath)
+        Glide.with(holder.itemView).load(photoPath).placeholder(R.drawable.ic_image_black_24dp).into(holder.itemView.firstItem_imageView)
+        holder.itemView.firstItem_TextView_L1.text = researchList[position].itemName
+        holder.itemView.firstItem_TextView_R1.text = researchList[position].itemType
         holder.itemView.firstItem_TextView_L2.text = researchList[position].editDate
         holder.itemView.firstItem_TextView_R2.text = researchList[position].brand
-
         //获得查找结果相关的词条来进行显示。
         try {
             var tag = 0

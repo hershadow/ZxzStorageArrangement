@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.camera_bottomsheetdialog.view.bottomDialog
 import kotlinx.android.synthetic.main.camera_insert_pager_info.view.*
 import java.io.File
 import java.lang.Exception
+import java.util.*
 
 /**
  * 下拉dialog作创建物品的最后步骤
@@ -91,14 +92,26 @@ class BottomDialogSheetFragment : BottomSheetDialogFragment() {
                                 try {
                                     if (returnItemId != (-1).toLong()){
                                         getItemId = returnItemId
-                                        if (Repository.repositoryImagePathTemporary.listFiles()?.get(holder.adapterPosition) != null)
-                                            Repository.temporaryToNormal(Repository.repositoryImagePathTemporary.listFiles()?.get(holder.adapterPosition)!!,getItemId)
+                                        if (Repository.repositoryImagePathTemporary.listFiles() != null){
+                                            val temporaryFiles = Repository.repositoryImagePathTemporary.listFiles()!!
+                                            Arrays.sort(temporaryFiles) { o1, o2 ->
+                                                val diff : Long = (o1.lastModified()) - (o2.lastModified())
+                                                when{
+                                                    diff> 0 -> 1
+                                                    diff == 0L -> 0
+                                                    diff < 0 -> -1
+                                                    else -> 0
+                                                }
+                                            }
+                                            Repository.temporaryToNormal(temporaryFiles[holder.adapterPosition],getItemId)
+
                                         viewModel.insertItemList.value?.get(holder.adapterPosition)!!.id = getItemId
                                         viewModel.insertItemList.value?.get(holder.adapterPosition)!!.mainPhotoPath = Repository.repositoryImagePathNormalMain.path + "/zxz${getItemId}.jpg"
                                         viewModel.updateItem(viewModel.insertItemList.value?.get(holder.adapterPosition)!!)
                                         viewModel.finishOrNotList.value?.set(holder.adapterPosition,true)
                                         requireActivity().runOnUiThread{
                                             adapter.refreshInfoList(2)
+                                        }
                                         }
                                     }else dialog_confirm_imageButton.post {
                                         Toast.makeText(
